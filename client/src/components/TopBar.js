@@ -53,14 +53,30 @@ const TopImage = styled.img`
   cursor: pointer;
 `;
 
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+  cursor: pointer;
+`;
+
 const TopBar = () => {
   return (
     <Container>
       <TopLeft>
-        <i className="topIcon fab fa-facebook"></i>
-        <i className="topIcon fab fa-twitter"></i>
-        <i className="topIcon fab fa-pinterest-p"></i>
-        <i className="topIcon fab fa-instagram"></i>
+        <Icon>
+          <i className="sidebarIcon fab fa-facebook"></i>
+        </Icon>
+        <Icon>
+          <i className="sidebarIcon fab fa-twitter"></i>
+        </Icon>
+        <Icon>
+          <i className="sidebarIcon fab fa-pinterest-p"></i>
+        </Icon>
+        <Icon>
+          <i className="sidebarIcon fab fa-instagram"></i>
+        </Icon>
       </TopLeft>
       <TopCenter>
         <NavList>
