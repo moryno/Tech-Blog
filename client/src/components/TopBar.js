@@ -77,7 +77,7 @@ const TopBar = () => {
         <i
           className="topSearchIcon fas fa-search"
           style={{
-            fontSize: "1.125re",
+            fontSize: "1.125rem",
             color: "#666",
             cursor: "pointer",
             marginLeft: "1rem",
