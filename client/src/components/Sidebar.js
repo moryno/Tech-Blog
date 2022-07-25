@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.section`
   flex: 3;
+  width: 100%;
   margin: 1.25rem;
   padding-bottom: 1.875rem;
   background-color: #fdfbfb;
@@ -16,6 +17,7 @@ const SideItem = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
 `;
 
 const SideTitle = styled.span`
@@ -32,9 +34,9 @@ const SideTitle = styled.span`
   text-align: center;
 `;
 
-const Image = styled.img`
+const TopImage = styled.img`
   margin-top: 0.9375rem;
-  width: 70%;
+  width: 80%;
   height: 15.625rem;
   object-fit: cover;
 `;
@@ -57,11 +59,54 @@ const SideElement = styled.li`
 `;
 
 const SideBarSocial = styled.article`
-  margin-top: 0.9375rem;
+  margin: 0.9375rem 0;
   width: 15.625rem;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+  cursor: pointer;
+`;
+
+const PopularPost = styled.article`
+  display: flex;
+  align-items: center;
+  width: 80%;
+`;
+
+const PopularInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0.625rem;
+  padding: 0.3125rem;
+  width: 100%;
+`;
+
+const PopularTitle = styled.span`
+  margin-bottom: 0.5rem;
+  color: #444;
+  cursor: pointer;
+  &:hover {
+    font-weight: 600;
+    text-decoration: underline;
+  }
+`;
+
+const Date = styled.span`
+  color: #444;
+  font-weight: 500;
+  font-size: 0.75rem;
+`;
+
+const PopularImage = styled.img`
+  width: 4.5rem;
+  height: 3.5rem;
+  object-fit: cover;
 `;
 
 const Sidebar = () => {
@@ -69,35 +114,77 @@ const Sidebar = () => {
     <Container>
       <SideItem>
         <SideTitle> ABOUT US </SideTitle>
+        <TopImage
+          src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+          alt="sideImg"
+        />
+        <Description>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat
+          vulputate purus vitae placerat.
+        </Description>
       </SideItem>
-      <Image
-        src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-        alt="sideImg"
-      />
-      <Description>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat
-        vulputate purus vitae placerat.
-      </Description>
       <SideItem>
-        <SideTitle> CATEGORY </SideTitle>
+        <SideTitle> POPULAR POSTS </SideTitle>
+        <PopularPost>
+          <PopularImage
+            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+            alt="popularImg"
+          />
+          <PopularInfoContainer>
+            <PopularTitle>Top 10 Ingredient</PopularTitle>
+            <Date>15th Feb 2022</Date>
+          </PopularInfoContainer>
+        </PopularPost>
+        <PopularPost>
+          <PopularImage
+            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+            alt="popularImg"
+          />
+          <PopularInfoContainer>
+            <PopularTitle>Top 10 Ingredient</PopularTitle>
+            <Date>15th Feb 2022</Date>
+          </PopularInfoContainer>
+        </PopularPost>
+        <PopularPost>
+          <PopularImage
+            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+            alt="popularImg"
+          />
+          <PopularInfoContainer>
+            <PopularTitle>Top 10 Ingredient</PopularTitle>
+            <Date>15th Feb 2022</Date>
+          </PopularInfoContainer>
+        </PopularPost>
       </SideItem>
-      <SideList>
-        <SideElement> Music </SideElement>
-        <SideElement> Art </SideElement>
-        <SideElement> Food </SideElement>
-        <SideElement> Movies </SideElement>
-        <SideElement> Dance </SideElement>
-        <SideElement> Books </SideElement>
-      </SideList>
+
       <SideItem>
         <SideTitle> FOLLOW US </SideTitle>
+        <SideBarSocial>
+          <Icon>
+            <i className="sidebarIcon fab fa-facebook"></i>
+          </Icon>
+          <Icon>
+            <i className="sidebarIcon fab fa-twitter"></i>
+          </Icon>
+          <Icon>
+            <i className="sidebarIcon fab fa-pinterest-p"></i>
+          </Icon>
+          <Icon>
+            <i className="sidebarIcon fab fa-instagram"></i>
+          </Icon>
+        </SideBarSocial>
       </SideItem>
-      <SideBarSocial>
-        <i className="sidebarIcon fab fa-facebook"></i>
-        <i className="sidebarIcon fab fa-twitter"></i>
-        <i className="sidebarIcon fab fa-pinterest-p"></i>
-        <i className="sidebarIcon fab fa-instagram"></i>
-      </SideBarSocial>
+      <SideItem>
+        <SideTitle> CATEGORY </SideTitle>
+        <SideList>
+          <SideElement> Music </SideElement>
+          <SideElement> Art </SideElement>
+          <SideElement> Food </SideElement>
+          <SideElement> Movies </SideElement>
+          <SideElement> Dance </SideElement>
+          <SideElement> Books </SideElement>
+        </SideList>
+      </SideItem>
     </Container>
   );
 };
