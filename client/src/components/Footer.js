@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 const Footers = styled.footer`
-  position: absolute;
-  padding: 60px;
+  padding: 3.75rem;
   text-align: center;
   bottom: 0;
   width: 100%;
@@ -11,7 +10,7 @@ const Footers = styled.footer`
 `;
 
 const Span = styled.span`
-  color: ;
+  color: #ccc;
 `;
 
 const Footer = () => {

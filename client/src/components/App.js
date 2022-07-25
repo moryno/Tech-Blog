@@ -1,3 +1,4 @@
+import Home from "../pages/Home";
 import Footer from "./Footer";
 import Header from "./Header";
 import Post from "./Post";
@@ -7,9 +8,10 @@ import TopBar from "./TopBar";
 
 function App() {
   return (
-    <div style={{ display: "flex" }}>
-      <Posts />
-      <Sidebar />
+    <div>
+      <TopBar />
+      <Home />
+      <Footer />
     </div>
   );
 }

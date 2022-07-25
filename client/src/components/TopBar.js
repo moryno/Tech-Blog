@@ -9,6 +9,7 @@ const Container = styled.section`
   top: 0;
   z-index: 999;
   height: 3.125rem;
+  background-color: white;
 `;
 
 const TopLeft = styled.article`
