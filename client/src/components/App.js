@@ -1,13 +1,12 @@
 import Footer from "./Footer";
 import Header from "./Header";
+import Post from "./Post";
 import TopBar from "./TopBar";
 
 function App() {
   return (
     <div>
-      <TopBar />
-      <Header />
-      <Footer />
+      <Post />
     </div>
   );
 }
