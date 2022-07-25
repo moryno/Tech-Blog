@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Container = styled.section`
   width: 18rem;
+  margin-bottom: 2.5rem;
 `;
 
 const Image = styled.img`
