@@ -1,4 +1,5 @@
 import Home from "../pages/Home";
+import { Login } from "../pages/Login";
 import Footer from "./Footer";
 import Header from "./Header";
 import Post from "./Post";
@@ -9,9 +10,10 @@ import TopBar from "./TopBar";
 function App() {
   return (
     <div>
-      <TopBar />
+      <Login />
+      {/* <TopBar />
       <Home />
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }
