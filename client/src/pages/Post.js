@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import posts from "../apis";
 
 const Container = styled.section`
   flex: 9;
@@ -110,16 +113,25 @@ const PostInput = styled.input`
 `;
 
 const Post = () => {
+  const { postId } = useParams();
+  const [post, setPost] = useState({});
+  const [updateMode, setUpdateMode] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await posts.get(`/posts/${postId}`);
+      setPost(data);
+    };
+    fetchData();
+  }, [postId]);
+
   return (
     <Container>
       <Wrapper>
-        <Image
-          src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-          alt="postImg"
-        />
+        <Image src={post.photo} alt="postImg" />
         <PostInput />
         <PostTitle>
-          The Witcher
+          {post.title}
           <PostEdit>
             <Icon>
               <i className="singlePostIcon far fa-edit"></i>
@@ -132,22 +144,12 @@ const Post = () => {
         <PostInfo>
           <PostAuthor>
             Author:
-            <AuthorName>John Doe</AuthorName>
+            <AuthorName>{post.author}</AuthorName>
           </PostAuthor>
-          <Date>15th Feb 2021</Date>
+          <Date>{post.date}</Date>
         </PostInfo>
         <Content />
-        <Description>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum.
-        </Description>
+        <Description>{post.desc}</Description>
         <Button> Update </Button>
       </Wrapper>
     </Container>
