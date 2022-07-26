@@ -6,11 +6,12 @@ import Post from "../pages/Post";
 import Posts from "../pages/Posts";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import Compose from "../pages/Compose";
 
 function App() {
   return (
     <div>
-      <Posts />
+      <Compose />
       {/* <Login /> */}
       {/* <TopBar />
       <Home />

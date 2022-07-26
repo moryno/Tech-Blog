@@ -5,7 +5,7 @@ const Container = styled.section`
 `;
 
 const Wrapper = styled.article`
-  padding: 20px;
+  padding: 1.25rem;
   padding-right: 0;
   display: flex;
   flex-direction: column;
@@ -13,21 +13,21 @@ const Wrapper = styled.article`
 
 const Image = styled.img`
   width: 100%;
-  height: 300px;
-  border-radius: 5px;
+  height: 25rem;
+  border-radius: 0.3125rem;
   object-fit: cover;
 `;
 
 const PostTitle = styled.h1`
   text-align: center;
-  margin: 10px;
+  margin: 0.625rem;
   font-family: "Lora", serif;
-  font-size: 26px;
+  font-size: 1.625rem;
 `;
 
 const PostEdit = styled.article`
   float: right;
-  font-size: 16px;
+  font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,17 +37,17 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
+  margin-left: 0.625rem;
 
   cursor: pointer;
 `;
 
 const PostInfo = styled.article`
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   display: flex;
   justify-content: space-between;
   font-family: "Varela Round", sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: #b39656;
 `;
 
@@ -65,6 +65,9 @@ const Content = styled.textarea`
   border: none;
   border-bottom: 1px solid lightgray;
   color: gray;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Description = styled.p`
