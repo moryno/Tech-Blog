@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { publicRequest } from "../requestMethods";
-import { mobile } from "../responsive";
+// import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -22,7 +21,6 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: white;
-  ${mobile({ width: "75%" })};
 `;
 
 const Title = styled.h1`
@@ -56,80 +54,32 @@ const Button = styled.button`
   border: none;
 `;
 
-export const Register = () => {
-  const [inputs, setInputs] = useState({
-    fName: "",
-    lName: "",
-    username: "",
-    email: "",
-    password: "",
-    confPassword: "",
-  });
-  const [error, setError] = useState(false);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputs((inputs) => {
-      return {
-        ...inputs,
-        [name]: value,
-      };
-    });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setError(false);
-    try {
-      if (inputs.password === inputs.confPassword) {
-        const { data } = await publicRequest.post("/auth/register", inputs);
-        data && window.location.replace("/login");
-      } else {
-        setError(true);
-      }
-    } catch (err) {
-      setError(true);
-    }
-  };
+const Register = () => {
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input
-            onChange={handleChange}
-            name="fName"
-            placeholder="First Name"
-          />
-          <Input onChange={handleChange} name="lName" placeholder="Last Name" />
-          <Input
-            onChange={handleChange}
-            name="username"
-            placeholder="Username"
-          />
-          <Input onChange={handleChange} name="email" placeholder="Email" />
-          <Input
-            onChange={handleChange}
-            name="password"
-            placeholder="Password"
-          />
-          <Input
-            onChange={handleChange}
-            name="confPassword"
-            placeholder="Confirm Password"
-          />
+          <Input name="fName" placeholder="First Name" />
+          <Input name="lName" placeholder="Last Name" />
+          <Input name="username" placeholder="Username" />
+          <Input name="email" placeholder="Email" />
+          <Input name="password" placeholder="Password" />
+          <Input name="confPassword" placeholder="Confirm Password" />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button onClick={handleSubmit}>CREATE</Button>
-          {error && (
+          <Button>CREATE</Button>
+          {/* {error && (
             <span style={{ color: "red", marginTop: "10px" }}>
               Password does not match!
             </span>
-          )}
+          )} */}
         </Form>
       </Wrapper>
     </Container>
   );
 };
+
+export default Register;

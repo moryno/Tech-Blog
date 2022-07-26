@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Sidebar from "../components/Sidebar";
 
 const Container = styled.main`
   display: flex;
@@ -112,6 +113,7 @@ const Settings = () => {
           <Button>Update</Button>
         </SettingForm>
       </Wrapper>
+      <Sidebar />
     </Container>
   );
 };
