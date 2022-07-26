@@ -7,11 +7,12 @@ import Posts from "../pages/Posts";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import Compose from "../pages/Compose";
+import Settings from "../pages/Settings";
 
 function App() {
   return (
     <div>
-      <Compose />
+      <Settings />
       {/* <Login /> */}
       {/* <TopBar />
       <Home />
