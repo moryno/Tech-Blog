@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.section`
@@ -65,32 +66,52 @@ const TopBar = () => {
   return (
     <Container>
       <TopLeft>
-        <Icon>
-          <i className="sidebarIcon fab fa-facebook"></i>
-        </Icon>
-        <Icon>
-          <i className="sidebarIcon fab fa-twitter"></i>
-        </Icon>
-        <Icon>
-          <i className="sidebarIcon fab fa-pinterest-p"></i>
-        </Icon>
-        <Icon>
-          <i className="sidebarIcon fab fa-instagram"></i>
-        </Icon>
+        <NavLink to={`/https://www.reddit.com/user/mngash`}>
+          <Icon>
+            <i class="fab fa-reddit-alien"></i>
+          </Icon>
+        </NavLink>
+        <NavLink to={`/https://twitter.com/MauriceNganga5`}>
+          <Icon>
+            <i className="sidebarIcon fab fa-twitter"></i>
+          </Icon>
+        </NavLink>
+        <NavLink to={`/https://www.linkedin.com/in/maurice-nganga-a6668b213/`}>
+          <Icon>
+            <i class="fab fa-linkedin"></i>
+          </Icon>
+        </NavLink>
+        <NavLink to={`/https://github.com/moryno/`}>
+          <Icon>
+            <i class="fab fa-github"></i>
+          </Icon>
+        </NavLink>
       </TopLeft>
       <TopCenter>
         <NavList>
-          <NavItem> HOME </NavItem>
-          <NavItem> ABOUT </NavItem>
-          <NavItem> COMPOSE </NavItem>
+          <NavLink to={`/`}>
+            <NavItem> HOME </NavItem>
+          </NavLink>
+          <NavLink to={`/about`}>
+            <NavItem> ABOUT </NavItem>
+          </NavLink>
+          <NavLink to={`/compose`}>
+            <NavItem> COMPOSE </NavItem>
+          </NavLink>
         </NavList>
       </TopCenter>
       <TopRight>
         <NavList>
-          <NavItem> LOGIN </NavItem>
-          <NavItem> REGISTER </NavItem>
+          <NavLink to={`/login`}>
+            <NavItem> LOGIN </NavItem>
+          </NavLink>
+          <NavLink to={`/register`}>
+            <NavItem> REGISTER </NavItem>
+          </NavLink>
         </NavList>
-        <TopImage src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720" />
+        <NavLink to={`/settings`}>
+          <TopImage src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720" />
+        </NavLink>
         <i
           className="topSearchIcon fas fa-search"
           style={{
