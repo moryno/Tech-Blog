@@ -10,21 +10,12 @@ const Container = styled.section`
   justify-content: space-evenly;
 `;
 
-const Posts = () => {
+const Posts = ({ posts }) => {
   return (
     <Container>
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      {posts.map((post) => {
+        return <Post key={post.id} post={post} />;
+      })}
     </Container>
   );
 };
