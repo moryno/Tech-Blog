@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-// import { mobile } from "../responsive";
+import user from "../apis";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,27 +55,72 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [input, setInput] = useState({
+    fName: "",
+    lName: "",
+    username: "",
+    email: "",
+    password: "",
+    confPassword: "",
+  });
+  const [error, setError] = useState(false);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInput({ ...input, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (input.password === input.confPassword) {
+        const { data } = await user.post(`/users`, input);
+        data && window.location.replace("/login");
+      } else {
+        setError(true);
+      }
+    } catch (err) {
+      setError(true);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input name="fName" placeholder="First Name" />
-          <Input name="lName" placeholder="Last Name" />
-          <Input name="username" placeholder="Username" />
-          <Input name="email" placeholder="Email" />
-          <Input name="password" placeholder="Password" />
-          <Input name="confPassword" placeholder="Confirm Password" />
+        <Form onSubmit={handleSubmit}>
+          <Input
+            onChange={handleChange}
+            name="fName"
+            placeholder="First Name"
+          />
+          <Input onChange={handleChange} name="lName" placeholder="Last Name" />
+          <Input
+            onChange={handleChange}
+            name="username"
+            placeholder="Username"
+          />
+          <Input onChange={handleChange} name="email" placeholder="Email" />
+          <Input
+            onChange={handleChange}
+            name="password"
+            placeholder="Password"
+          />
+          <Input
+            onChange={handleChange}
+            name="confPassword"
+            placeholder="Confirm Password"
+          />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
           <Button>CREATE</Button>
-          {/* {error && (
+          {error && (
             <span style={{ color: "red", marginTop: "10px" }}>
               Password does not match!
             </span>
-          )} */}
+          )}
         </Form>
       </Wrapper>
     </Container>

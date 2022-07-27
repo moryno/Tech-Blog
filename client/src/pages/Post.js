@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import posts from "../apis";
 
@@ -112,7 +112,7 @@ const PostInput = styled.input`
   }
 `;
 
-const Post = () => {
+const Post = ({ users }) => {
   const { postId } = useParams();
   const [post, setPost] = useState({});
   const [updateMode, setUpdateMode] = useState(false);
@@ -132,6 +132,7 @@ const Post = () => {
         <PostInput />
         <PostTitle>
           {post.title}
+
           <PostEdit>
             <Icon>
               <i className="singlePostIcon far fa-edit"></i>
@@ -144,7 +145,9 @@ const Post = () => {
         <PostInfo>
           <PostAuthor>
             Author:
-            <AuthorName>{post.author}</AuthorName>
+            <Link to={`/?user=${post.author}`}>
+              <AuthorName>{post.author}</AuthorName>
+            </Link>
           </PostAuthor>
           <Date>{post.date}</Date>
         </PostInfo>

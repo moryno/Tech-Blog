@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import styled from "styled-components";
+import user from "../apis";
 
 const Container = styled.div`
   width: 100vw;
@@ -64,13 +66,29 @@ const Error = styled.span`
 `;
 
 export const Login = () => {
+  const userRef = useRef();
+  const passwordRef = useRef();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(userRef.current.value);
+    console.log(passwordRef.current.value);
+
+    try {
+      const { data } = await user.post("/users", {
+        username: userRef.current.value,
+        password: passwordRef.current.value,
+      });
+    } catch (err) {}
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>SIGN IN</Title>
-        <Form>
-          <Input placeholder="Username" name="username" />
-          <Input placeholder="Password" type="password" />
+        <Form onSubmit={handleSubmit}>
+          <Input placeholder="Username" name="username" ref={userRef} />
+          <Input placeholder="Password" type="password" ref={passwordRef} />
           <Button>LOGIN</Button>
           {/* {error && <Error>Something went wrong</Error>} */}
           <Link>DO NOT REMEMBER PASSWORD?</Link>
