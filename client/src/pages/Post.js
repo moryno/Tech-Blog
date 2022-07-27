@@ -70,11 +70,11 @@ const Date = styled.span``;
 
 const Description = styled.p`
   color: #666;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.5;
   &::first-letter {
-    margin-left: 20px;
-    font-size: 30px;
+    margin-left: 1.25rem;
+    font-size: 1.875rem;
     font-weight: 600;
   }
   &:focus {
@@ -83,21 +83,21 @@ const Description = styled.p`
 `;
 
 const Button = styled.button`
-  width: 100px;
+  width: 6.25rem;
   color: white;
   background-color: teal;
   border: none;
-  border-radius: 5px;
-  padding: 5px;
+  border-radius: 0.3125rem;
+  padding: 0.3125rem;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 1.25rem;
   align-self: flex-end;
 `;
 
 const PostInput = styled.input`
-  margin: 10px;
+  margin: 0.625rem;
   font-family: "Lora", serif;
-  font-size: 26px;
+  font-size: 1.625rem;
   border: none;
   border-bottom: 1px solid lightgray;
   color: grey;
@@ -108,7 +108,7 @@ const PostInput = styled.input`
 `;
 
 const Content = styled.textarea`
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.5;
   border: none;
   border-bottom: 1px solid lightgray;
@@ -143,7 +143,12 @@ const Post = () => {
   };
   const handleUpdate = async () => {
     try {
-      const { data } = await posts.patch(`/posts/${postId}`);
+      await posts.patch(`/posts/${postId}`, {
+        author: user.username,
+        title: inputs.title,
+        desc: inputs.desc,
+      });
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -211,7 +216,7 @@ const Post = () => {
         ) : (
           <Description>{post.desc}</Description>
         )}
-        {updateMode && <Button> Update </Button>}
+        {updateMode && <Button onClick={handleUpdate}> Update </Button>}
       </Wrapper>
     </Container>
   );
