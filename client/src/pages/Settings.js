@@ -1,5 +1,8 @@
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import users from "../apis";
 import Sidebar from "../components/Sidebar";
+import { UserContext } from "../context/Context";
 
 const Container = styled.main`
   display: flex;
@@ -86,17 +89,54 @@ const Button = styled.button`
 `;
 
 const Settings = () => {
+  const { user, dispatch } = useContext(UserContext);
+  const [{ username, email, password }, setState] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setState((state) => ({ ...state, [name]: value }));
+  };
+
+  const handleUpdate = async (event) => {
+    dispatch({ type: "UPDATE_START" });
+    event.preventDefault();
+    try {
+      const { data } = await users.patch(`/users/${user.id}`, {
+        username,
+        email,
+        password,
+      });
+      dispatch({ type: "UPDATE_SUCCESS", payload: data });
+      window.location.reload();
+    } catch (error) {
+      dispatch({ type: "UPDATE_FAILURE" });
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await users.delete(`/users/${user.id}`);
+      dispatch({ type: "LOGOUT" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(user);
   return (
     <Container>
       <Wrapper>
         <SettingTitle>
           <UpdateTitle>Update Your Account</UpdateTitle>
-          <DeleteTitle>Delete Account</DeleteTitle>
+          <DeleteTitle onClick={handleDelete}>Delete Account</DeleteTitle>
         </SettingTitle>
-        <SettingForm>
+        <SettingForm onSubmit={handleUpdate}>
           <Label>Profile Picture</Label>
           <SettingProfile>
-            <Image src="" alt="profileImg" />
+            <Image src={user.profile} alt="profileImg" />
             <Label htmlFor="fileInput">
               <Icon>
                 <i className="settingsPPIcon far fa-user-circle"></i>
@@ -105,11 +145,28 @@ const Settings = () => {
             <Input type={"file"} id="fileInput" style={{ display: "none" }} />
           </SettingProfile>
           <Label>Username</Label>
-          <Input type={"text"} placeholder="Username" />
+          <Input
+            onChange={handleChange}
+            type={"text"}
+            name="username"
+            value={username}
+            placeholder="Username"
+          />
           <Label>Email</Label>
-          <Input type={"email"} placeholder="email@email.com" />
+          <Input
+            onChange={handleChange}
+            type={"email"}
+            name="email"
+            value={email}
+            placeholder="email@email.com"
+          />
           <Label>Password</Label>
-          <Input type={"password"} />
+          <Input
+            onChange={handleChange}
+            type={"password"}
+            name="password"
+            value={password}
+          />
           <Button>Update</Button>
         </SettingForm>
       </Wrapper>

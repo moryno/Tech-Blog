@@ -2,6 +2,13 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import posts from "../apis";
 import { UserContext } from "../context/Context";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../filebase";
 
 const Container = styled.section`
   padding-top: 3.125rem;
@@ -91,31 +98,75 @@ const Compose = () => {
     author: user.username,
     date: new Date(),
   });
+  const [category, setCategory] = useState([]);
+  const [file, setFile] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setTitle({ ...input, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleCategory = (event) => {
+    const value = event.target.value;
+    setCategory(value.split(","));
+  };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      const { data } = await posts.post(`/posts`, input);
-      setTitle({
-        title: "",
-        desc: "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const fileName = new Date().getTime() + file.name;
+    const storage = getStorage(app);
+    const storageRef = ref(storage, fileName);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const result = { ...input, photo: downloadURL, category };
+          try {
+            const { data } = posts.post(`/posts`, result);
+            setTitle({
+              title: "",
+              desc: "",
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        });
+      }
+    );
   };
 
   return (
     <Container>
-      <Image
-        src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-        alt="newImage"
-      />
+      {file && <Image src={URL.createObjectURL(file)} alt="newImage" />}
       <ComposeForm onSubmit={handleSubmit}>
         <FormWrapper>
           <Label htmlFor="fileInput">
@@ -123,7 +174,12 @@ const Compose = () => {
               <i className="writeFormIcon fas fa-plus"></i>
             </Icon>
           </Label>
-          <FileInput type={"file"} id="fileInput" style={{ display: "none" }} />
+          <FileInput
+            onChange={(event) => setFile(event.target.files[0])}
+            type={"file"}
+            id="fileInput"
+            style={{ display: "none" }}
+          />
           <TextInput
             onChange={handleChange}
             type={"text"}
@@ -131,6 +187,13 @@ const Compose = () => {
             value={input.title}
             placeholder="Title"
             autoFocus={true}
+          />
+          <TextInput
+            onChange={handleCategory}
+            type={"text"}
+            name="category"
+            value={category}
+            placeholder="Category"
           />
         </FormWrapper>
         <WriteGroup>
