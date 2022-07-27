@@ -42,8 +42,13 @@ const Icon = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 0.625rem;
-
   cursor: pointer;
+  &:first-child {
+    color: teal;
+  }
+  &:last-child {
+    color: tomato;
+  }
 `;
 
 const PostInfo = styled.article`
@@ -62,17 +67,6 @@ const AuthorName = styled.b`
 `;
 
 const Date = styled.span``;
-
-const Content = styled.textarea`
-  font-size: 18px;
-  line-height: 1.5;
-  border: none;
-  border-bottom: 1px solid lightgray;
-  color: gray;
-  &:focus {
-    outline: none;
-  }
-`;
 
 const Description = styled.p`
   color: #666;
@@ -113,11 +107,27 @@ const PostInput = styled.input`
   }
 `;
 
+const Content = styled.textarea`
+  font-size: 18px;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  color: gray;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
+`;
+
 const Post = () => {
   const { postId } = useParams();
   const [post, setPost] = useState({});
   const [updateMode, setUpdateMode] = useState(false);
   const { user } = useContext(UserContext);
+  const [inputs, setInputs] = useState({
+    title: "",
+    desc: "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,6 +136,18 @@ const Post = () => {
     };
     fetchData();
   }, [postId]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+  const handleUpdate = async () => {
+    try {
+      const { data } = await posts.patch(`/posts/${postId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleDelete = async () => {
     try {
@@ -140,23 +162,35 @@ const Post = () => {
     <Container>
       <Wrapper>
         <Image src={post.photo} alt="postImg" />
-        <PostInput />
-        <PostTitle>
-          {post.title}
-          {post.author === user?.username && (
-            <PostEdit>
-              <Icon>
-                <i className="singlePostIcon far fa-edit"></i>
-              </Icon>
-              <Icon>
-                <i
-                  className="singlePostIcon far fa-trash-alt"
-                  onClick={handleDelete}
-                ></i>
-              </Icon>
-            </PostEdit>
-          )}
-        </PostTitle>
+        {updateMode ? (
+          <PostInput
+            onChange={handleChange}
+            name="title"
+            value={inputs.title}
+            placeholder="Title"
+          />
+        ) : (
+          <PostTitle>
+            {post.title}
+            {post.author === user?.username && (
+              <PostEdit>
+                <Icon>
+                  <i
+                    className="singlePostIcon far fa-edit"
+                    onClick={() => setUpdateMode(true)}
+                  ></i>
+                </Icon>
+                <Icon>
+                  <i
+                    className="singlePostIcon far fa-trash-alt"
+                    onClick={handleDelete}
+                  ></i>
+                </Icon>
+              </PostEdit>
+            )}
+          </PostTitle>
+        )}
+
         <PostInfo>
           <PostAuthor>
             Author:
@@ -166,9 +200,18 @@ const Post = () => {
           </PostAuthor>
           <Date>{post.date}</Date>
         </PostInfo>
-        <Content />
-        <Description>{post.desc}</Description>
-        <Button> Update </Button>
+
+        {updateMode ? (
+          <Content
+            onChange={handleChange}
+            name="desc"
+            value={inputs.desc}
+            placeholder="Content"
+          />
+        ) : (
+          <Description>{post.desc}</Description>
+        )}
+        {updateMode && <Button> Update </Button>}
       </Wrapper>
     </Container>
   );
