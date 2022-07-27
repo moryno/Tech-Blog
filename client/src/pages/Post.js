@@ -127,6 +127,15 @@ const Post = () => {
     fetchData();
   }, [postId]);
 
+  const handleDelete = async () => {
+    try {
+      await posts.delete(`/posts/${postId}`);
+      window.location.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -134,13 +143,16 @@ const Post = () => {
         <PostInput />
         <PostTitle>
           {post.title}
-          {post.author === user.username && (
+          {post.author === user?.username && (
             <PostEdit>
               <Icon>
                 <i className="singlePostIcon far fa-edit"></i>
               </Icon>
               <Icon>
-                <i className="singlePostIcon far fa-trash-alt"></i>
+                <i
+                  className="singlePostIcon far fa-trash-alt"
+                  onClick={handleDelete}
+                ></i>
               </Icon>
             </PostEdit>
           )}

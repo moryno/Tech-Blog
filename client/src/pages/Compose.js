@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import posts from "../apis";
+import { UserContext } from "../context/Context";
 
 const Container = styled.section`
   padding-top: 3.125rem;
@@ -83,9 +84,11 @@ const Button = styled.button`
 `;
 
 const Compose = () => {
+  const { user } = useContext(UserContext);
   const [input, setTitle] = useState({
     title: "",
     desc: "",
+    author: user.username,
     date: new Date(),
   });
 
