@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import styled from "styled-components";
-import user from "../apis";
+import userApi from "../apis";
+import { UserContext } from "../context/Context";
 
 const Container = styled.div`
   width: 100vw;
@@ -19,12 +20,12 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 25%;
-  padding: 20px;
+  padding: 1.25rem;
   background-color: white;
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 300;
 `;
 
@@ -36,18 +37,18 @@ const Form = styled.form`
 const Input = styled.input`
   flex: 1;
   min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
+  margin: 0.625rem 0;
+  padding: 0.625rem;
 `;
 
 const Button = styled.button`
   width: 40%;
   background-color: teal;
   color: white;
-  padding: 15px 20px;
+  padding: 15px 1.25rem;
   cursor: pointer;
   border: none;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
   &:disabled {
     cursor: not-allowed;
     color: green;
@@ -56,7 +57,7 @@ const Button = styled.button`
 
 const Link = styled.a`
   margin: 5px 0;
-  font-size: 12px;
+  font-size: 0.75rem;
   text-decoration: underline;
   cursor: pointer;
 `;
@@ -69,17 +70,20 @@ export const Login = () => {
   const userRef = useRef();
   const passwordRef = useRef();
 
+  const { user, errors, dispatch, isFetching } = useContext(UserContext);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userRef.current.value);
-    console.log(passwordRef.current.value);
-
+    dispatch({ type: "LOGIN_START" });
     try {
-      const { data } = await user.post("/users", {
+      const { data } = await userApi.post(`/users`, {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });
-    } catch (err) {}
+      dispatch({ type: "LOGIN_SUCCESS", payload: data });
+    } catch (error) {
+      dispatch("LOGIN_FAILURE");
+    }
   };
 
   return (
@@ -89,8 +93,8 @@ export const Login = () => {
         <Form onSubmit={handleSubmit}>
           <Input placeholder="Username" name="username" ref={userRef} />
           <Input placeholder="Password" type="password" ref={passwordRef} />
-          <Button>LOGIN</Button>
-          {/* {error && <Error>Something went wrong</Error>} */}
+          <Button disabled={isFetching}>LOGIN</Button>
+          {errors && <Error>Something went wrong</Error>}
           <Link>DO NOT REMEMBER PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>
         </Form>

@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import posts from "../apis";
 
 const Container = styled.section`
   padding-top: 3.125rem;
@@ -81,13 +83,37 @@ const Button = styled.button`
 `;
 
 const Compose = () => {
+  const [input, setTitle] = useState({
+    title: "",
+    desc: "",
+    date: new Date(),
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setTitle({ ...input, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await posts.post(`/posts`, input);
+      setTitle({
+        title: "",
+        desc: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container>
       <Image
         src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
         alt="newImage"
       />
-      <ComposeForm>
+      <ComposeForm onSubmit={handleSubmit}>
         <FormWrapper>
           <Label htmlFor="fileInput">
             <Icon>
@@ -95,10 +121,22 @@ const Compose = () => {
             </Icon>
           </Label>
           <FileInput type={"file"} id="fileInput" style={{ display: "none" }} />
-          <TextInput type={"text"} placeholder="Title" autoFocus={true} />
+          <TextInput
+            onChange={handleChange}
+            type={"text"}
+            name="title"
+            value={input.title}
+            placeholder="Title"
+            autoFocus={true}
+          />
         </FormWrapper>
         <WriteGroup>
-          <Content placeholder="What is your story...?" />
+          <Content
+            onChange={handleChange}
+            name="desc"
+            value={input.desc}
+            placeholder="What is your story...?"
+          />
         </WriteGroup>
         <Button>Publish</Button>
       </ComposeForm>

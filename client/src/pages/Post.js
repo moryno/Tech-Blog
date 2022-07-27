@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import posts from "../apis";
+import { UserContext } from "../context/Context";
 
 const Container = styled.section`
   flex: 9;
@@ -112,10 +113,11 @@ const PostInput = styled.input`
   }
 `;
 
-const Post = ({ users }) => {
+const Post = () => {
   const { postId } = useParams();
   const [post, setPost] = useState({});
   const [updateMode, setUpdateMode] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,15 +134,16 @@ const Post = ({ users }) => {
         <PostInput />
         <PostTitle>
           {post.title}
-
-          <PostEdit>
-            <Icon>
-              <i className="singlePostIcon far fa-edit"></i>
-            </Icon>
-            <Icon>
-              <i className="singlePostIcon far fa-trash-alt"></i>
-            </Icon>
-          </PostEdit>
+          {post.author === user.username && (
+            <PostEdit>
+              <Icon>
+                <i className="singlePostIcon far fa-edit"></i>
+              </Icon>
+              <Icon>
+                <i className="singlePostIcon far fa-trash-alt"></i>
+              </Icon>
+            </PostEdit>
+          )}
         </PostTitle>
         <PostInfo>
           <PostAuthor>

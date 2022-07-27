@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../context/Context";
 
 const Container = styled.section`
   display: flex;
@@ -63,6 +65,13 @@ const Icon = styled.div`
 `;
 
 const TopBar = () => {
+  const { user, dispatch } = useContext(UserContext);
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    window.location.replace("/login");
+  };
+
   return (
     <Container>
       <TopLeft>
@@ -98,20 +107,25 @@ const TopBar = () => {
           <NavLink to={`/compose`}>
             <NavItem> COMPOSE </NavItem>
           </NavLink>
+          {user && <NavItem onClick={handleLogout}> LOGOUT </NavItem>}
         </NavList>
       </TopCenter>
       <TopRight>
-        <NavList>
-          <NavLink to={`/login`}>
-            <NavItem> LOGIN </NavItem>
+        {!user ? (
+          <NavList>
+            <NavLink to={`/login`}>
+              <NavItem> LOGIN </NavItem>
+            </NavLink>
+            <NavLink to={`/register`}>
+              <NavItem> REGISTER </NavItem>
+            </NavLink>
+          </NavList>
+        ) : (
+          <NavLink to={`/settings`}>
+            <TopImage src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720" />
           </NavLink>
-          <NavLink to={`/register`}>
-            <NavItem> REGISTER </NavItem>
-          </NavLink>
-        </NavList>
-        <NavLink to={`/settings`}>
-          <TopImage src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720" />
-        </NavLink>
+        )}
+
         <i
           className="topSearchIcon fas fa-search"
           style={{

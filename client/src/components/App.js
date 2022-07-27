@@ -7,20 +7,12 @@ import TopBar from "./TopBar";
 import Compose from "../pages/Compose";
 import Settings from "../pages/Settings";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import users from "../apis";
+import { UserContext } from "../context/Context";
 
 function App() {
-  const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const { data: user } = await users.get(`/user`);
-  //     setUser(user);
-  //   };
-  //   fetchUser();
-  // }, []);
-
+  const { user } = useContext(UserContext);
   return (
     <Router>
       <TopBar />
@@ -30,7 +22,7 @@ function App() {
         <Route path="/login" element={user ? <Home /> : <Login />} />
         <Route path="/settings" element={user ? <Settings /> : <Register />} />
         <Route path="/compose" element={user ? <Compose /> : <Register />} />
-        <Route path="/post/:postId" element={<Post users={user} />} />
+        <Route path="/post/:postId" element={<Post />} />
       </Routes>
       <Footer />
     </Router>
