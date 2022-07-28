@@ -23,7 +23,7 @@ const Category = styled.article``;
 
 const CategoryTitle = styled.span`
   font-family: "Varela Round", sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.8125rem;
   color: #be9656;
   line-height: 1.25rem;
   margin-top: 1rem;

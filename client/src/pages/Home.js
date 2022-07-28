@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import post from "../apis";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import About from "../components/About";
 
 const Container = styled.article`
   display: flex;
@@ -12,19 +13,19 @@ const Container = styled.article`
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const { search } = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await post.get("/posts" + search);
+      const { data } = await post.get("/posts");
       setPosts(data);
     };
     fetchData();
-  }, [search]);
+  }, []);
 
   return (
     <>
       <Header />
+      <About />
       <Container>
         <Posts posts={posts} />
         <Sidebar />
