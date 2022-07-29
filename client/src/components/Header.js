@@ -28,7 +28,7 @@ const Button = styled.button``;
 
 const HeaderImage = styled.img`
   width: 100%;
-  height: 31.25rem;
+  height: 55vh;
   margin-top: 3.8%;
   object-fit: cover;
 `;
@@ -41,7 +41,7 @@ const Header = () => {
         <Title>BLOG</Title>
       </TitleWrapper>
       <HeaderImage
-        src="https://images.pexels.com/photos/257897/pexels-photo-257897.jpeg"
+        src="https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
         alt="headerImg"
       />
     </Container>
