@@ -35,7 +35,8 @@ const Hr = styled.hr`
 
 const Description = styled.p`
   font-family: "Varela Round", sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.975rem;
+
   color: #444;
   line-height: 1.5rem;
   margin-top: 1rem;
