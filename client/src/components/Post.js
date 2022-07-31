@@ -67,7 +67,9 @@ const Post = ({ post }) => {
       <PostInfoContainer>
         <Category>
           {post.categories?.map((cat, index) => (
-            <CategoryTitle key={index}>{cat}</CategoryTitle>
+            <Link to={`/?cat=${cat}`}>
+              <CategoryTitle key={index}>{cat}</CategoryTitle>
+            </Link>
           ))}
         </Category>
         <Link to={`/post/${post._id}`}>

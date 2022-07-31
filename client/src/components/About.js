@@ -49,7 +49,7 @@ const Description = styled.p`
 
 const About = () => {
   return (
-    <Container>
+    <Container id="about">
       <Wrapper>
         <SubTitle>WEB / ANDROID</SubTitle>
         <Title>About this site</Title>

@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../context/Context";
+import { HashLink as Link } from "react-router-hash-link";
 
 const Container = styled.section`
   display: flex;
@@ -75,35 +76,38 @@ const TopBar = () => {
   return (
     <Container>
       <TopLeft>
-        <NavLink to={`/https://www.reddit.com/user/mngash`}>
+        <a href={`https://www.reddit.com/user/mngash`} target="_blank">
           <Icon>
             <i class="fab fa-reddit-alien"></i>
           </Icon>
-        </NavLink>
-        <NavLink to={`/https://twitter.com/MauriceNganga5`}>
+        </a>
+        <a href={`https://twitter.com/MauriceNganga5`} target="_blank">
           <Icon>
             <i className="sidebarIcon fab fa-twitter"></i>
           </Icon>
-        </NavLink>
-        <NavLink to={`/https://www.linkedin.com/in/maurice-nganga-a6668b213/`}>
+        </a>
+        <a
+          href={`https://www.linkedin.com/in/maurice-nganga-a6668b213/`}
+          target="_blank"
+        >
           <Icon>
             <i class="fab fa-linkedin"></i>
           </Icon>
-        </NavLink>
-        <NavLink to={`/https://github.com/moryno/`}>
+        </a>
+        <a href={`https://github.com/moryno/`} target="_blank">
           <Icon>
             <i class="fab fa-github"></i>
           </Icon>
-        </NavLink>
+        </a>
       </TopLeft>
       <TopCenter>
         <NavList>
           <NavLink to={`/`}>
             <NavItem> HOME </NavItem>
           </NavLink>
-          <NavLink to={`/about`}>
+          <Link to={`#about`}>
             <NavItem> ABOUT </NavItem>
-          </NavLink>
+          </Link>
           <NavLink to={`/compose`}>
             <NavItem> COMPOSE </NavItem>
           </NavLink>
