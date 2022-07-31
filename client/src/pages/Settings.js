@@ -99,6 +99,7 @@ const Button = styled.button`
 const Settings = () => {
   const { user, dispatch } = useContext(UserContext);
   const [{ username, email, password }, setState] = useState({
+    userId: user._id,
     username: "",
     email: "",
     password: "",
@@ -139,10 +140,11 @@ const Settings = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const result = { username, email, password, profile: downloadURL };
+
           try {
-            const { data } = users.patch(`/users/${user.id}`, result);
+            const { data } = users.put(`/users/${user._id}`, result);
             dispatch({ type: "UPDATE_SUCCESS", payload: data });
-            window.location.reload();
+            // window.location.reload();
           } catch (error) {
             dispatch({ type: "UPDATE_FAILURE" });
           }
@@ -153,7 +155,7 @@ const Settings = () => {
 
   const handleDelete = async () => {
     try {
-      await users.delete(`/users/${user.id}`);
+      await users.delete(`/users/${user._id}`, { data: { userId: user._id } });
       dispatch({ type: "LOGOUT" });
     } catch (error) {
       console.log(error);
