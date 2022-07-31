@@ -66,14 +66,14 @@ const Post = ({ post }) => {
       <Image src={post.photo} alt="postImage" />
       <PostInfoContainer>
         <Category>
-          {post.category?.map((cat, index) => (
+          {post.categories?.map((cat, index) => (
             <CategoryTitle key={index}>{cat}</CategoryTitle>
           ))}
         </Category>
-        <Link to={`/post/${post.id}`}>
+        <Link to={`/post/${post._id}`}>
           <PostTitle>{post.title}</PostTitle>
         </Link>
-        <PostDate>{new Date(post.date).toDateString()}</PostDate>
+        <PostDate>{new Date(post.createdAt).toDateString()}</PostDate>
       </PostInfoContainer>
       <Description>{post.desc}</Description>
     </Container>

@@ -60,9 +60,9 @@ const PostInfo = styled.article`
   color: #b39656;
 `;
 
-const PostAuthor = styled.span``;
+const Postusername = styled.span``;
 
-const AuthorName = styled.b`
+const usernameName = styled.b`
   cursor: pointer;
 `;
 
@@ -133,6 +133,7 @@ const Post = () => {
     const fetchData = async () => {
       const { data } = await posts.get(`/posts/${postId}`);
       setPost(data);
+      setInputs({ title: data.title, desc: data.desc });
     };
     fetchData();
   }, [postId]);
@@ -143,8 +144,8 @@ const Post = () => {
   };
   const handleUpdate = async () => {
     try {
-      await posts.patch(`/posts/${postId}`, {
-        author: user.username,
+      await posts.put(`/posts/${postId}`, {
+        username: user.username,
         title: inputs.title,
         desc: inputs.desc,
       });
@@ -156,7 +157,9 @@ const Post = () => {
 
   const handleDelete = async () => {
     try {
-      await posts.delete(`/posts/${postId}`);
+      await posts.delete(`/posts/${postId}`, {
+        data: { username: user.username },
+      });
       window.location.replace("/");
     } catch (error) {
       console.log(error);
@@ -177,7 +180,7 @@ const Post = () => {
         ) : (
           <PostTitle>
             {post.title}
-            {post.author === user?.username && (
+            {post.username === user?.username && (
               <PostEdit>
                 <Icon>
                   <i
@@ -197,12 +200,12 @@ const Post = () => {
         )}
 
         <PostInfo>
-          <PostAuthor>
-            Author:
-            <Link to={`/?user=${post.author}`}>
-              <AuthorName>{post.author}</AuthorName>
+          <Postusername>
+            username:
+            <Link to={`/?user=${post.username}`}>
+              <usernameName>{post.username}</usernameName>
             </Link>
-          </PostAuthor>
+          </Postusername>
           <Date>{post.date}</Date>
         </PostInfo>
 

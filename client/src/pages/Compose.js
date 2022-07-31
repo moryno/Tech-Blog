@@ -95,10 +95,9 @@ const Compose = () => {
   const [input, setTitle] = useState({
     title: "",
     desc: "",
-    author: user.username,
-    date: new Date(),
+    username: user.username,
   });
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [file, setFile] = useState(null);
 
   const handleChange = (event) => {
@@ -108,10 +107,10 @@ const Compose = () => {
 
   const handleCategory = (event) => {
     const value = event.target.value;
-    setCategory(value.split(","));
+    setCategories(value.split(","));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const fileName = new Date().getTime() + file.name;
     const storage = getStorage(app);
@@ -138,14 +137,17 @@ const Compose = () => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const result = { ...input, photo: downloadURL, category };
+          const result = { ...input, photo: downloadURL, categories };
+
           try {
             const { data } = posts.post(`/posts`, result);
+            posts.post(`/categories`, { name: categories });
             setTitle({
               title: "",
               desc: "",
             });
-            setCategory([]);
+            setCategories([]);
+            window.location.replace(`/post/${data._id}`);
           } catch (error) {
             console.log(error);
           }
@@ -182,7 +184,7 @@ const Compose = () => {
             onChange={handleCategory}
             type={"text"}
             name="category"
-            value={category}
+            value={categories}
             placeholder="Category"
           />
         </FormWrapper>

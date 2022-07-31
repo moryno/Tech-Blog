@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://tech-demo-api.herokuapp.com",
+  baseURL: "https://tech-blog-backend-server.herokuapp.com/api",
 });

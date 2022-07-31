@@ -3,6 +3,14 @@ import styled from "styled-components";
 import users from "../apis";
 import Sidebar from "../components/Sidebar";
 import { UserContext } from "../context/Context";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+
+import app from "../filebase";
 
 const Container = styled.main`
   display: flex;
@@ -95,26 +103,52 @@ const Settings = () => {
     email: "",
     password: "",
   });
+  const [file, setFile] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setState((state) => ({ ...state, [name]: value }));
   };
 
-  const handleUpdate = async (event) => {
+  const handleUpdate = (event) => {
     dispatch({ type: "UPDATE_START" });
     event.preventDefault();
-    try {
-      const { data } = await users.patch(`/users/${user.id}`, {
-        username,
-        email,
-        password,
-      });
-      dispatch({ type: "UPDATE_SUCCESS", payload: data });
-      window.location.reload();
-    } catch (error) {
-      dispatch({ type: "UPDATE_FAILURE" });
-    }
+    const fileName = new Date().getTime() + file.name;
+    const storage = getStorage(app);
+    const storageRef = ref(storage, fileName);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
+        }
+      },
+      (error) => {},
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const result = { username, email, password, profile: downloadURL };
+          try {
+            const { data } = users.patch(`/users/${user.id}`, result);
+            dispatch({ type: "UPDATE_SUCCESS", payload: data });
+            window.location.reload();
+          } catch (error) {
+            dispatch({ type: "UPDATE_FAILURE" });
+          }
+        });
+      }
+    );
   };
 
   const handleDelete = async () => {
@@ -125,7 +159,7 @@ const Settings = () => {
       console.log(error);
     }
   };
-  console.log(user);
+
   return (
     <Container>
       <Wrapper>
@@ -136,13 +170,21 @@ const Settings = () => {
         <SettingForm onSubmit={handleUpdate}>
           <Label>Profile Picture</Label>
           <SettingProfile>
-            <Image src={user.profile} alt="profileImg" />
+            <Image
+              src={file ? URL.createObjectURL(file) : user.profile}
+              alt="profileImg"
+            />
             <Label htmlFor="fileInput">
               <Icon>
                 <i className="settingsPPIcon far fa-user-circle"></i>
               </Icon>
             </Label>
-            <Input type={"file"} id="fileInput" style={{ display: "none" }} />
+            <Input
+              onChange={(event) => setFile(event.target.files[0])}
+              type={"file"}
+              id="fileInput"
+              style={{ display: "none" }}
+            />
           </SettingProfile>
           <Label>Username</Label>
           <Input

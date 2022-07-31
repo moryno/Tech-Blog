@@ -76,7 +76,7 @@ export const Login = () => {
     event.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const { data } = await userApi.post(`/users`, {
+      const { data } = await userApi.post(`/auth/login`, {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });

@@ -122,7 +122,7 @@ const TopBar = () => {
           </NavList>
         ) : (
           <NavLink to={`/settings`}>
-            <TopImage src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720" />
+            <TopImage src={user.profile} />
           </NavLink>
         )}
 

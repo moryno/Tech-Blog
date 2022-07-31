@@ -13,14 +13,15 @@ const Container = styled.article`
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const { search } = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data } = await post.get("/posts");
+      const { data } = await post.get("/posts" + search);
       setPosts(data);
     };
     fetchData();
-  }, []);
+  }, [search]);
 
   return (
     <>

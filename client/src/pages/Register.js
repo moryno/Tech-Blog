@@ -74,7 +74,7 @@ const Register = () => {
     event.preventDefault();
     try {
       if (input.password === input.confPassword) {
-        const { data } = await user.post(`/users`, input);
+        const { data } = await user.post(`/auth/register`, input);
         data && window.location.replace("/login");
       } else {
         setError(true);
