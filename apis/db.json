@@ -101,6 +101,13 @@
       "username": "jonn",
       "password": "1234",
       "id": 5
+    },
+    {
+      "username": "ma",
+      "password": "0987",
+      "id": 6,
+      "email": "mauricenganga41@gmail.com",
+      "profile": "https://firebasestorage.googleapis.com/v0/b/tech-blog-5767d.appspot.com/o/1659106146648react.png?alt=media&token=6719419a-d5c1-4a39-8c10-12f821ae55fb"
     }
   ]
 }

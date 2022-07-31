@@ -4,7 +4,7 @@
 
 ### Tech Blog landing page
 
-![Tech Blog](./client/src/images/tech-blog%20sm.png)
+![Tech Blog](./client/src/images/tech-blogan.png)
 
 ## Table of Content
 
@@ -19,43 +19,41 @@
 
 ---
 
-On the third week in Web Development course we cover intoduction to Javascript. Javascript allows interaction with the page. While HTML is for structuring webpages and CSS is for styling the page.  
-With the help of the three, _**HTML, CSS**_ and _**Javascript**_ , I made a quiz board for after-school computer class to take, to test their understanding of _**Javascript**_. It is a multiple choice questions website where they get to pick the answer they think is correct. And after submitting their selected answers they get their scores back.  
-With the help of _**Javascript**_ I was able to create functions that can be performed by some of the features of the website. _For example_, when an input box is checked it triggers a function that check the selected answer then compaires the selected answer with the correct answer then stores the points in an array that will be computed when submit button is clicked.  
-With the _**Javascript**_ I was able to create a quiz carousel, then the student is done select their answer they can click on the _nextQuiz_ button which allows the next slider with the next question to show up. They have the ability to go back to the previous question if they want to change their answers.
-Then on the last question the _submit_ button allows them to post their answer and this triggers a fuction that goes through the points array then sum all the points the students got then displays the score to them.
+Tech blog is a web application meant to be used in an institution to allow students, technical mentors or any person in the organisation to write, edit, read and post aritcles about a topic they are interested in. The website is ment to provide a platform where each member of the institution can share their ideas and interests with the other members of the institution creating an interactive environment and bring people together. A visitor to the website can browse and read any article or search on articles by author name or categories. A registered user are further provided with tools to create, upload, edit and delete thier own articles. This is a blog website with a front-end made using react and a backend made with db.json. The front-end is diployed in [vercel](https://vercel.com/) hosting service while the db.json is hosted in [heroku](https://heroku.com/).
 
 ## Features
 
 ---
 
-The computer club students visiting this page would be able to see:
+A user visiting this page would be able to see:
 
-1. Quiz board landing page with a start button
+1. A home page populated with posts from different writers.
 
-2. Multi-choice questions
+2. A top navigation section with links to register or login for a new user and a link to compose page for a registed user.
 
-3. An input they can select thei answer
+3. A user can select a post by clicking on the title and this will enable to read the full article in a single separate page
 
-4. Sliders containing different questions
+4. For a user they can visit the compose page and they are provided with tools to write, edit, upload and post an article in any topic they are interested in.
 
-5. A submit button to submit their answer when they are done
+5. A registered user are future provided with tools to edit or delete their own post when they select their own posts and be redirected to the single page.
 
-6. Their score at the header section
+6. A settings [age where they can edit thier profil, upload a profile or delete their own profile.
+
+7. A viitor to the website can select a post depending on the author or categegory they are interested in by clicking on the author name or category list.
 
 ### Technology Used
 
 ---
 
-- Used Visual Studio Code editor to write the _**HTML**_, _**CSS**_ and _**Javascript**_ used to create the quiz board website.
+- Used Visual Studio Code editor to create the front-end with _**React**_ and backend with _**db.json**_
 
-- **HTML** - HTML was used to create the structure and foundation of the landing page.
+- **Styled-components** - was used to create the structure and the styling of the website.
 
-- **CSS** - used css to style the website to look appealing to the user.
+- **Firebase** - was used to upload images to the website.
 
-- **Javascript** - Used Javascript to create functions, conditions and loops to manipulate items on the webpage. Especially added event listeners that can listen and trigger a function when features like input checkbox and buttons are clicked on.
+- **Context-Api** - was used to help persist a user across all pages in the website and enable them with accessibility privilages.
 
-- Employed the help of [www.w3schools.com](https://www.w3schools.com/jsref/prop_element_classlist.asp) to be able to add and remove class attributes. With the help of [stackoverflow.com](https://stackoverflow.com/questions/9709209/html-select-only-one-checkbox-in-a-group) I was able to add the function to allow only one answer to be selcted at a time.
+- **React** - help in creating interactive website
 
 ---
 
@@ -79,7 +77,7 @@ To enhance or contribute on the existing project, follow these steps:
 
 ---
 
-\- Click this link to see the live website [Quiz Board Website](https://moryno.github.io/Quiz-Board/)
+\- Click this link to see the live website [Tech Blog Website](https://tech-blog-moryno.vercel.app/)
 
 ## License
 
