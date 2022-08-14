@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../context/Context";
@@ -25,6 +25,19 @@ const TopLeft = styled.article`
 
 const TopCenter = styled.article`
   flex: 6;
+  position: relative;
+`;
+const Input = styled.input`
+  position: absolute;
+  padding: 0.8rem;
+  border-radius: 0.2rem;
+  width: 95%;
+  outline: none;
+  top: 0;
+  &::placeholder {
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
 `;
 
 const NavList = styled.ul`
@@ -66,6 +79,8 @@ const Icon = styled.div`
 `;
 
 const TopBar = () => {
+  const [searchMode, setSearchMode] = useState(false);
+
   const { user, dispatch } = useContext(UserContext);
 
   const handleLogout = () => {
@@ -113,6 +128,7 @@ const TopBar = () => {
           </NavLink>
           {user && <NavItem onClick={handleLogout}> LOGOUT </NavItem>}
         </NavList>
+        {searchMode && <Input placeholder="Search..." />}
       </TopCenter>
       <TopRight>
         {!user ? (
@@ -126,19 +142,36 @@ const TopBar = () => {
           </NavList>
         ) : (
           <NavLink to={`/settings`}>
-            <TopImage src={user.profile} />
+            <TopImage
+              src={
+                user.profile.length > 0
+                  ? user.profile
+                  : "https://ualr.edu/biology/files/2021/11/blank-profile-picture-973460_1280.png"
+              }
+            />
           </NavLink>
         )}
-
-        <i
-          className="topSearchIcon fas fa-search"
-          style={{
-            fontSize: "1.125rem",
-            color: "#666",
-            cursor: "pointer",
-            marginLeft: "1rem",
-          }}
-        ></i>
+        {searchMode ? (
+          <Icon>
+            <i
+              onClick={() => setSearchMode(!searchMode)}
+              class="fas fa-times"
+            ></i>
+          </Icon>
+        ) : (
+          <Icon>
+            <i
+              onClick={() => setSearchMode(!searchMode)}
+              className="topSearchIcon fas fa-search"
+              style={{
+                fontSize: "1.125rem",
+                color: "#666",
+                cursor: "pointer",
+                marginLeft: "1rem",
+              }}
+            ></i>
+          </Icon>
+        )}
       </TopRight>
     </Container>
   );

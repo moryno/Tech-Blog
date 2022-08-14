@@ -29,7 +29,7 @@ const Home = () => {
       <About />
       <Container>
         <Posts posts={posts} />
-        <Sidebar />
+        <Sidebar posts={posts} />
       </Container>
     </>
   );

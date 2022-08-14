@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.section`
@@ -52,7 +53,7 @@ const SideList = styled.ul`
 
 const SideElement = styled.li`
   display: inline-block;
-  width: 50%;
+  width: 45%;
   margin-top: 0.625rem;
   cursor: pointer;
   margin-right: 0px;
@@ -93,7 +94,6 @@ const PopularTitle = styled.span`
   cursor: pointer;
   &:hover {
     font-weight: 600;
-    text-decoration: underline;
   }
 `;
 
@@ -109,7 +109,7 @@ const PopularImage = styled.img`
   object-fit: cover;
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ posts }) => {
   return (
     <Container>
       <SideItem>
@@ -177,12 +177,14 @@ const Sidebar = () => {
       <SideItem>
         <SideTitle> CATEGORY </SideTitle>
         <SideList>
-          <SideElement> Music </SideElement>
-          <SideElement> Art </SideElement>
-          <SideElement> Food </SideElement>
-          <SideElement> Movies </SideElement>
-          <SideElement> Dance </SideElement>
-          <SideElement> Books </SideElement>
+          {posts?.map((post) => {
+            return post.categories.map((category, index) => (
+              <Link to={`/?cat=${category}`}>
+                {" "}
+                <SideElement key={index}> {category} </SideElement>{" "}
+              </Link>
+            ));
+          })}
         </SideList>
       </SideItem>
     </Container>

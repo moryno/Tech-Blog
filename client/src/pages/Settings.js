@@ -97,18 +97,19 @@ const Button = styled.button`
 `;
 
 const Settings = () => {
-  const { user, dispatch } = useContext(UserContext);
-  const [{ username, email, password }, setState] = useState({
-    userId: user._id,
+  const [success, setSuccess] = useState(false);
+  const [{ userId, username, email, password }, setState] = useState({
+    userId: null,
     username: "",
     email: "",
     password: "",
   });
   const [file, setFile] = useState(null);
+  const { user, dispatch } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setState((state) => ({ ...state, [name]: value }));
+    setState((state) => ({ ...state, userId: user._id, [name]: value }));
   };
 
   const handleUpdate = (event) => {
@@ -139,10 +140,17 @@ const Settings = () => {
       (error) => {},
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const result = { username, email, password, profile: downloadURL };
+          const result = {
+            userId,
+            username,
+            email,
+            password,
+            profile: downloadURL,
+          };
 
           try {
             const { data } = users.put(`/users/${user._id}`, result);
+            setSuccess(true);
             dispatch({ type: "UPDATE_SUCCESS", payload: data });
             // window.location.reload();
           } catch (error) {
@@ -212,6 +220,13 @@ const Settings = () => {
             value={password}
           />
           <Button>Update</Button>
+          {success && (
+            <span
+              style={{ color: "green", textAlign: "center", marginTop: "20px" }}
+            >
+              Profile updated successfully...
+            </span>
+          )}
         </SettingForm>
       </Wrapper>
       <Sidebar />
