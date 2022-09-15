@@ -67,6 +67,7 @@ To enhance or contribute on the existing project, follow these steps:
 
 - Fork the repo
 - Create a new branch (git checkout -b enhance-feature)
+- Run npm install
 - Make the appropriate changes in the files
 - Add changes to reflect the changes made
 - Commit your changes (git commit -m 'Enhanced feature')
