@@ -4,6 +4,114 @@ import styled from "styled-components";
 import posts from "../apis";
 import { UserContext } from "../context/Context";
 
+const Post = () => {
+  const { postId } = useParams();
+  const [post, setPost] = useState({});
+  const [updateMode, setUpdateMode] = useState(false);
+  const { user } = useContext(UserContext);
+  const [inputs, setInputs] = useState({
+    title: "",
+    desc: "",
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await posts.get(`/posts/${postId}`);
+      setPost(data);
+      setInputs({ title: data.title, desc: data.desc });
+    };
+    fetchData();
+  }, [postId]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+  const handleUpdate = async () => {
+    try {
+      await posts.put(`/posts/${postId}`, {
+        username: user.username,
+        title: inputs.title,
+        desc: inputs.desc,
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await posts.delete(`/posts/${postId}`, {
+        data: { username: user.username },
+      });
+      window.location.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Image src={post.photo} alt="postImg" />
+        {updateMode ? (
+          <PostInput
+            onChange={handleChange}
+            name="title"
+            value={inputs.title}
+            placeholder="Title"
+          />
+        ) : (
+          <PostTitle>
+            {post.title}
+            {post.username === user?.username && (
+              <PostEdit>
+                <Icon>
+                  <i
+                    className="singlePostIcon far fa-edit"
+                    onClick={() => setUpdateMode(true)}
+                  ></i>
+                </Icon>
+                <Icon>
+                  <i
+                    className="singlePostIcon far fa-trash-alt"
+                    onClick={handleDelete}
+                  ></i>
+                </Icon>
+              </PostEdit>
+            )}
+          </PostTitle>
+        )}
+
+        <PostInfo>
+          <Postusername>
+            username:
+            <Link to={`/?user=${post.username}`}>
+              <usernameName>{post.username}</usernameName>
+            </Link>
+          </Postusername>
+          <Date>{post.date}</Date>
+        </PostInfo>
+
+        {updateMode ? (
+          <Content
+            onChange={handleChange}
+            name="desc"
+            value={inputs.desc}
+            placeholder="Content"
+          />
+        ) : (
+          <Description>{post.desc}</Description>
+        )}
+        {updateMode && <Button onClick={handleUpdate}> Update </Button>}
+      </Wrapper>
+    </Container>
+  );
+};
+
+export default Post;
+
 const Container = styled.section`
   flex: 9;
 `;
@@ -118,111 +226,3 @@ const Content = styled.textarea`
     outline: none;
   }
 `;
-
-const Post = () => {
-  const { postId } = useParams();
-  const [post, setPost] = useState({});
-  const [updateMode, setUpdateMode] = useState(false);
-  const { user } = useContext(UserContext);
-  const [inputs, setInputs] = useState({
-    title: "",
-    desc: "",
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await posts.get(`/posts/${postId}`);
-      setPost(data);
-      setInputs({ title: data.title, desc: data.desc });
-    };
-    fetchData();
-  }, [postId]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputs({ ...inputs, [name]: value });
-  };
-  const handleUpdate = async () => {
-    try {
-      await posts.put(`/posts/${postId}`, {
-        username: user.username,
-        title: inputs.title,
-        desc: inputs.desc,
-      });
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      await posts.delete(`/posts/${postId}`, {
-        data: { username: user.username },
-      });
-      window.location.replace("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  return (
-    <Container>
-      <Wrapper>
-        <Image src={post.photo} alt="postImg" />
-        {updateMode ? (
-          <PostInput
-            onChange={handleChange}
-            name="title"
-            value={inputs.title}
-            placeholder="Title"
-          />
-        ) : (
-          <PostTitle>
-            {post.title}
-            {post.username === user?.username && (
-              <PostEdit>
-                <Icon>
-                  <i
-                    className="singlePostIcon far fa-edit"
-                    onClick={() => setUpdateMode(true)}
-                  ></i>
-                </Icon>
-                <Icon>
-                  <i
-                    className="singlePostIcon far fa-trash-alt"
-                    onClick={handleDelete}
-                  ></i>
-                </Icon>
-              </PostEdit>
-            )}
-          </PostTitle>
-        )}
-
-        <PostInfo>
-          <Postusername>
-            username:
-            <Link to={`/?user=${post.username}`}>
-              <usernameName>{post.username}</usernameName>
-            </Link>
-          </Postusername>
-          <Date>{post.date}</Date>
-        </PostInfo>
-
-        {updateMode ? (
-          <Content
-            onChange={handleChange}
-            name="desc"
-            value={inputs.desc}
-            placeholder="Content"
-          />
-        ) : (
-          <Description>{post.desc}</Description>
-        )}
-        {updateMode && <Button onClick={handleUpdate}> Update </Button>}
-      </Wrapper>
-    </Container>
-  );
-};
-
-export default Post;

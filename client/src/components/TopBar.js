@@ -93,7 +93,7 @@ const TopBar = () => {
       <TopLeft>
         <a href={`https://www.reddit.com/user/mngash`} target="_blank">
           <Icon>
-            <i class="fab fa-reddit-alien"></i>
+            <i className="fab fa-reddit-alien"></i>
           </Icon>
         </a>
         <a href={`https://twitter.com/MauriceNganga5`} target="_blank">
@@ -106,12 +106,12 @@ const TopBar = () => {
           target="_blank"
         >
           <Icon>
-            <i class="fab fa-linkedin"></i>
+            <i className="fab fa-linkedin"></i>
           </Icon>
         </a>
         <a href={`https://github.com/moryno/`} target="_blank">
           <Icon>
-            <i class="fab fa-github"></i>
+            <i className="fab fa-github"></i>
           </Icon>
         </a>
       </TopLeft>
@@ -144,7 +144,7 @@ const TopBar = () => {
           <NavLink to={`/settings`}>
             <TopImage
               src={
-                user.profile.length > 0
+                user?.profile?.length > 0
                   ? user.profile
                   : "https://ualr.edu/biology/files/2021/11/blank-profile-picture-973460_1280.png"
               }

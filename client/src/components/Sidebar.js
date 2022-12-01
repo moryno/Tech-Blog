@@ -1,6 +1,90 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const Sidebar = ({ posts }) => {
+  return (
+    <Container>
+      <SideItem>
+        <SideTitle> ABOUT US </SideTitle>
+        <TopImage
+          src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+          alt="sideImg"
+        />
+        <Description>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat
+          vulputate purus vitae placerat.
+        </Description>
+      </SideItem>
+      <SideItem>
+        <SideTitle> POPULAR POSTS </SideTitle>
+        <PopularPost>
+          <PopularImage
+            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+            alt="popularImg"
+          />
+          <PopularInfoContainer>
+            <PopularTitle>Top 10 Ingredient</PopularTitle>
+            <Date>15th Feb 2022</Date>
+          </PopularInfoContainer>
+        </PopularPost>
+        <PopularPost>
+          <PopularImage
+            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+            alt="popularImg"
+          />
+          <PopularInfoContainer>
+            <PopularTitle>Top 10 Ingredient</PopularTitle>
+            <Date>15th Feb 2022</Date>
+          </PopularInfoContainer>
+        </PopularPost>
+        <PopularPost>
+          <PopularImage
+            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
+            alt="popularImg"
+          />
+          <PopularInfoContainer>
+            <PopularTitle>Top 10 Ingredient</PopularTitle>
+            <Date>15th Feb 2022</Date>
+          </PopularInfoContainer>
+        </PopularPost>
+      </SideItem>
+
+      <SideItem>
+        <SideTitle> FOLLOW US </SideTitle>
+        <SideBarSocial>
+          <Icon>
+            <i className="sidebarIcon fab fa-facebook"></i>
+          </Icon>
+          <Icon>
+            <i className="sidebarIcon fab fa-twitter"></i>
+          </Icon>
+          <Icon>
+            <i className="sidebarIcon fab fa-pinterest-p"></i>
+          </Icon>
+          <Icon>
+            <i className="sidebarIcon fab fa-instagram"></i>
+          </Icon>
+        </SideBarSocial>
+      </SideItem>
+      <SideItem>
+        <SideTitle> CATEGORY </SideTitle>
+        <SideList>
+          {posts?.map((post) => {
+            return post.categories.map((category, index) => (
+              <Link key={index} to={`/?cat=${category}`}>
+                {" "}
+                <SideElement> {category} </SideElement>
+              </Link>
+            ));
+          })}
+        </SideList>
+      </SideItem>
+    </Container>
+  );
+};
+
+export default Sidebar;
+
 const Container = styled.section`
   flex: 3;
   width: 100%;
@@ -108,87 +192,3 @@ const PopularImage = styled.img`
   height: 3.5rem;
   object-fit: cover;
 `;
-
-const Sidebar = ({ posts }) => {
-  return (
-    <Container>
-      <SideItem>
-        <SideTitle> ABOUT US </SideTitle>
-        <TopImage
-          src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-          alt="sideImg"
-        />
-        <Description>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed volutpat
-          vulputate purus vitae placerat.
-        </Description>
-      </SideItem>
-      <SideItem>
-        <SideTitle> POPULAR POSTS </SideTitle>
-        <PopularPost>
-          <PopularImage
-            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-            alt="popularImg"
-          />
-          <PopularInfoContainer>
-            <PopularTitle>Top 10 Ingredient</PopularTitle>
-            <Date>15th Feb 2022</Date>
-          </PopularInfoContainer>
-        </PopularPost>
-        <PopularPost>
-          <PopularImage
-            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-            alt="popularImg"
-          />
-          <PopularInfoContainer>
-            <PopularTitle>Top 10 Ingredient</PopularTitle>
-            <Date>15th Feb 2022</Date>
-          </PopularInfoContainer>
-        </PopularPost>
-        <PopularPost>
-          <PopularImage
-            src="https://www.gizmodo.com.au/wp-content/uploads/sites/2/2021/11/04/league-of-legends-arcane.jpg?quality=80&resize=1280,720"
-            alt="popularImg"
-          />
-          <PopularInfoContainer>
-            <PopularTitle>Top 10 Ingredient</PopularTitle>
-            <Date>15th Feb 2022</Date>
-          </PopularInfoContainer>
-        </PopularPost>
-      </SideItem>
-
-      <SideItem>
-        <SideTitle> FOLLOW US </SideTitle>
-        <SideBarSocial>
-          <Icon>
-            <i className="sidebarIcon fab fa-facebook"></i>
-          </Icon>
-          <Icon>
-            <i className="sidebarIcon fab fa-twitter"></i>
-          </Icon>
-          <Icon>
-            <i className="sidebarIcon fab fa-pinterest-p"></i>
-          </Icon>
-          <Icon>
-            <i className="sidebarIcon fab fa-instagram"></i>
-          </Icon>
-        </SideBarSocial>
-      </SideItem>
-      <SideItem>
-        <SideTitle> CATEGORY </SideTitle>
-        <SideList>
-          {posts?.map((post) => {
-            return post.categories.map((category, index) => (
-              <Link to={`/?cat=${category}`}>
-                {" "}
-                <SideElement key={index}> {category} </SideElement>{" "}
-              </Link>
-            ));
-          })}
-        </SideList>
-      </SideItem>
-    </Container>
-  );
-};
-
-export default Sidebar;

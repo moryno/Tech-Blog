@@ -1,6 +1,30 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const Post = ({ post }) => {
+  return (
+    <Container>
+      <Image src={post.photo} alt="postImage" />
+      <PostInfoContainer>
+        <Category>
+          {post.categories?.map((cat, index) => (
+            <CategoryTitle key={index}>
+              <Link to={`/?cat=${cat}`}>{cat}</Link>
+            </CategoryTitle>
+          ))}
+        </Category>
+        <Link to={`/post/${post._id}`}>
+          <PostTitle>{post.title}</PostTitle>
+        </Link>
+        <PostDate>{new Date(post.createdAt).toDateString()}</PostDate>
+      </PostInfoContainer>
+      <Description>{post.desc}</Description>
+    </Container>
+  );
+};
+
+export default Post;
+
 const Container = styled.section`
   width: 18rem;
   margin-bottom: 2.5rem;
@@ -59,27 +83,3 @@ const Description = styled.p`
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 `;
-
-const Post = ({ post }) => {
-  return (
-    <Container>
-      <Image src={post.photo} alt="postImage" />
-      <PostInfoContainer>
-        <Category>
-          {post.categories?.map((cat, index) => (
-            <Link to={`/?cat=${cat}`}>
-              <CategoryTitle key={index}>{cat}</CategoryTitle>
-            </Link>
-          ))}
-        </Category>
-        <Link to={`/post/${post._id}`}>
-          <PostTitle>{post.title}</PostTitle>
-        </Link>
-        <PostDate>{new Date(post.createdAt).toDateString()}</PostDate>
-      </PostInfoContainer>
-      <Description>{post.desc}</Description>
-    </Container>
-  );
-};
-
-export default Post;
