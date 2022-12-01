@@ -4,7 +4,7 @@
 
 ### Tech Blog landing page
 
-![Tech Blog](./client/src/images/tech-blogan.png)
+![Tech Blog](./src/images/tech-blogan.png)
 
 ## Table of Content
 
